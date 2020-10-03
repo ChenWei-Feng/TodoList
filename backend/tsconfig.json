@@ -1,0 +1,21 @@
+// file: backend/tsconfig.json
+{
+    "compilerOptions": {
+        "allowJs": true,//允许编译javascript文件
+        "outDir": "./dist",  //最后的文件存放目录
+        "module": "commonjs", //设置编译后的模块
+        "target": "es2016", //编译目标
+        "sourceMap": true, 
+        "noImplicitAny": true, //隐式类型【不要any类型】
+        "strictNullChecks": true, //严格的控制检查
+        "experimentalDecorators": true, //装饰器 
+        "emitDecoratorMetadata": true, //给源码里的装饰器声明加上设计类型元数据
+        "resolveJsonModule": true,
+        "esModuleInterop": true, //允许从没有设置默认导出的模块中默认导入。这并不影响代码的输出，仅为了类型检查。
+        "allowSyntheticDefaultImports": true//允许从没有设置默认导出的模块中默认导入。
+        
+    },
+    "include": [
+        "./src/**/*"
+    ]
+}
