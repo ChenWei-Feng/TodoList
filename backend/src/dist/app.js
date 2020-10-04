@@ -52,42 +52,48 @@ var koa_1 = require("koa");
 var koa_ts_controllers_1 = require("koa-ts-controllers");
 var path_1 = require("path");
 var koa_bodyparser_1 = require("koa-bodyparser");
+var sequelize_typescript_1 = require("sequelize-typescript");
 var KoaRouter = require('koa-router');
-var app = new koa_1["default"]();
-var router = new KoaRouter();
 (function () { return __awaiter(void 0, void 0, void 0, function () {
+    var app, router, db;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, koa_ts_controllers_1.bootstrapControllers(app, {
-                    router: router,
-                    basePath: '/api',
-                    versions: [1],
-                    controllers: [
-                        path_1["default"].resolve(__dirname + '/controllers/**/*')
-                    ],
-                    errorHandler: function (err, ctx) { return __awaiter(void 0, void 0, void 0, function () {
-                        var status, body;
-                        return __generator(this, function (_a) {
-                            status = 500;
-                            body = {
-                                statusCode: status,
-                                error: "Internal Server error",
-                                message: "An internal server error occurred"
-                            };
-                            if (err.output) {
-                                status = err.output.statusCode;
-                                body = __assign({}, err.output.payload);
-                                if (err.data) {
-                                    body.errorDetails = err.data;
+            case 0:
+                app = new koa_1["default"]();
+                router = new KoaRouter();
+                db = new sequelize_typescript_1.Sequelize(__assign(__assign({}, configs_1["default"].database), { models: [__dirname + '/models/**/*'] }));
+                //注册路由
+                return [4 /*yield*/, koa_ts_controllers_1.bootstrapControllers(app, {
+                        router: router,
+                        basePath: '/api',
+                        versions: [1],
+                        controllers: [
+                            path_1["default"].resolve(__dirname + '/controllers/**/*')
+                        ],
+                        errorHandler: function (err, ctx) { return __awaiter(void 0, void 0, void 0, function () {
+                            var status, body;
+                            return __generator(this, function (_a) {
+                                status = 500;
+                                body = {
+                                    statusCode: status,
+                                    error: "Internal Server error",
+                                    message: "An internal server error occurred"
+                                };
+                                if (err.output) {
+                                    status = err.output.statusCode;
+                                    body = __assign({}, err.output.payload);
+                                    if (err.data) {
+                                        body.errorDetails = err.data;
+                                    }
                                 }
-                            }
-                            ctx.status = status;
-                            ctx.body = body;
-                            return [2 /*return*/];
-                        });
-                    }); }
-                })];
+                                ctx.status = status;
+                                ctx.body = body;
+                                return [2 /*return*/];
+                            });
+                        }); }
+                    })];
             case 1:
+                //注册路由
                 _a.sent();
                 app.use(koa_bodyparser_1["default"]());
                 app.use(router.routes());

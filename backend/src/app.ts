@@ -4,12 +4,17 @@ import {bootstrapControllers} from 'koa-ts-controllers'
 import path from 'path';
 import KoaBodyParser from 'koa-bodyparser';
 import Boom from '@hapi/Boom';
+import {Sequelize} from "sequelize-typescript"; 
 const KoaRouter = require('koa-router');
 
-const app = new Koa();
-const router = new KoaRouter();
+
 
 (async () => {
+    const app = new Koa();
+    const router = new KoaRouter();
+    //连接数据库
+    const db = new Sequelize({...configs.database,models: [__dirname + '/models/**/*']});
+    //注册路由
     await bootstrapControllers(app,{
         router:router,
         basePath:'/api',
